@@ -1,14 +1,14 @@
 # Viral enumeration using cost-effective wet-mount epifluorescence microscopy for aquatic ecosystems and modern microbialites
 
-Manuscript is currently under review. 
+Manuscript is currently under review.  <br />
 BioRxiv is is published
 
 This is the code and analysis for this article.
 
-Journal Article/citation for BioRxiv pre-print is: <br />
+Journal citation for BioRxiv pre-print is: <br />
 Bellanger M, Visscher PT, White III RA. 2023 <br />
-Viral enumeration using cost-effective wet-mount epifluorescence microscopy for aquatic ecosystems and modern microbialites <br />
-[BioRxiv paper](https://www.biorxiv.org/content/10.1101/2023.07.07.548154v1)
+Viral enumeration using cost-effective wet-mount epifluorescence microscopy for aquatic ecosystems and modern microbialites. BioRxiv <br />
+[paper](https://www.biorxiv.org/content/10.1101/2023.07.07.548154v1)
 
 ### Analysis
 
