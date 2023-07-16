@@ -12,7 +12,7 @@ Viral enumeration using cost-effective wet-mount epifluorescence microscopy for 
 
 ### Protocol
 
-The full step by step protocol is found in the doc/ folder
+The full step by step protocol is found in the doc/ folder: <br />
 [protocol](https://github.com/raw-lab/efm/blob/main/doc/Epifluorescence%20Microscopy%20Protocol.pdf)
 
 ### Analysis
@@ -21,7 +21,7 @@ This repo holds scripts to process data and build graphs. Outputs, results, and 
 
 ### Data
 
-Raw image files and supplemental data are all available at open science framework (OSF)
+Raw image files and supplemental data are all available at open science framework (OSF)<br />
 [osf](https://osf.io/f8be4/)
 
 ### CONTACT
