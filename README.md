@@ -10,6 +10,10 @@ Bellanger M, Visscher PT, White III RA. 2023 <br />
 Viral enumeration using cost-effective wet-mount epifluorescence microscopy for aquatic ecosystems and modern microbialites. BioRxiv <br />
 [paper](https://www.biorxiv.org/content/10.1101/2023.07.07.548154v1)
 
+### Protocol
+
+The full step by step protocol is found in the doc/ folder
+
 ### Analysis
 
 This repo holds scripts to process data and build graphs. Outputs, results, and figures are included as well in this repo.
