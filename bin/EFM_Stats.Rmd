@@ -1,0 +1,263 @@
+---
+title: "EFM_Stats"
+output: pdf_document
+date: "2023-09-20"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Data
+
+### VLP/mL
+
+```{r}
+
+# waters
+fglwater <- c(459847.8, 598175.99, 542097, 770151.59, 624346.19, 848662.19, 613130.39, 392553, 1435622.39, 1345895.99, 1144011.59, 1308509.99, 1323464.39, 1514132.99, 1282339.79, 919695.59, 1461792.59, 1424406.59, 897263.99)
+gslwater <- c(1409452.19, 1615075.19, 859877.99, 1682369.98, 1345895.99, 1861822.78, 1338418.79, 1218783.59, 1080455.39, 1005683.39, 1495439.99, 1525348.79, 1327202.99, 1637506.79, 1794527.98, 1312248.59, 1327202.99, 1648722.59, 1768357.78)
+
+# EPS
+fgleps <- c(10453125.51, 16195615.05, 19156586.23, 12157927.09, 20637071.81, 6191121.54, 5832215.95, 9286682.32, 5383583.95, 8972639.92, 8838050.32, 9510998.31, 11529842.30, 13503823.08, 18797680.63, 19246312.63, 17586374.24, 13817865.48, 7537017.53, 12337379.89, 12965464.68, 14939445.46, 8927776.72, 9690451.11, 18932270.23, 18214459.04, 8882913.52, 15163761.46, 10273672.71, 8344555.12, 10767167.90, 14401087.07)
+gsleps <- c(14715129.47, 20995977.41, 19829534.22, 8524007.92, 12875738.28, 10228809.51, 17631237.44, 17227468.64, 14445950.27, 13234643.88, 13010327.88, 11260663.10, 12516832.69, 18573364.63, 6191121.54, 8882913.52, 7492154.33, 6819206.34, 5518173.55, 17003152.65, 11215799.90, 7447291.13, 17541511.04, 7985649.53, 16599383.85, 16778836.65, 14356223.87, 17003152.65)
+
+# mat
+fglmat <- c(6550027.14, 6370574.34, 5383583.95, 7043522.34, 7357564.73, 4890088.76, 6953795.94, 5877079.15, 9331545.52, 9735314.31, 9062366.32, 10946620.70, 6998659.14, 7940786.33, 7447291.13, 6146258.34, 9152092.72, 9017503.12, 7806196.73, 9914767.11, 11305526.30, 10094219.91, 8524007.92, 7716470.33, 8972639.92)
+gslmat <- c(6998659.14, 5338720.75, 7761333.53, 7447291.13, 4710635.96, 6191121.54, 6953795.94, 6370574.34, 8658597.52, 5966805.55, 6819206.34, 11215799.90, 9421271.91, 9331545.52, 11484979.10, 10722304.70, 9780177.51, 7761333.53, 8793187.12, 11978474.29, 11529842.30, 9780177.51, 12516832.69, 11799021.49, 9376408.72, 7222975.13, 9376408.72)
+
+```
+
+### Dataframes
+
+```{r}
+
+# Water
+water <- data.frame( 
+  loc = rep(c("FGL", "GSL"), each = 19),
+  type = c(fglwater,  gslwater)
+)
+
+# EPS
+eps <- data.frame( 
+  loc = c(rep("FGL", 32), rep("GSL", 28)),
+  type = c(fgleps,  gsleps)
+)
+
+# mat
+mat <- data.frame( 
+  loc = c(rep("FGL", 25), rep("GSL", 27)),
+  type = c(fglmat,  gslmat)
+)
+
+# FGL/GSL
+location <- data.frame(
+  loc = c(rep("FGL", 76), rep("GSL", 74)),
+  sample = c(fglwater, fgleps, fglmat, gslwater, gsleps, gslmat)
+)
+
+# Water/EPS
+wve <- data.frame(
+  type = c(rep("water", 38), rep("EPS", 60)),
+  sample = c(fglwater, gslwater, fgleps, gsleps)
+)
+
+# Water/mat
+wvm <- data.frame(
+  type = c(rep("water", 38), rep("mat", 52)),
+  sample = c(fglwater, gslwater, fglmat, gslmat)
+)
+
+# EPS/mat
+evm <- data.frame(
+  type = c(rep("EPS", 60), rep("mat", 52)),
+  sample = c(fgleps, gsleps, fglmat, gslmat)
+)
+
+# FGL water/FGL mat
+fwvfm <- data.frame(
+  type = c(rep("FGL Water", 19), rep("FGL Mat", 25)),
+  sample = c(fglwater, fglmat)
+)
+
+# FGL water/FGL EPS
+fwvfe <- data.frame(
+  type = c(rep("FGL Water", 19), rep("FGL EPS", 32)),
+  sample = c(fglwater, fgleps)
+)
+
+# FGL EPS/FGL mat
+fevfm <- data.frame(
+  type = c(rep("FGL EPS", 32), rep("FGL Mat", 25)),
+  sample = c(fgleps, fglmat)
+)
+
+# GSL water/GSL mat
+gwvgm <- data.frame(
+  type = c(rep("GSL Water", 19), rep("GSL Mat", 27)),
+  sample = c(gslwater, gslmat)
+)
+
+# GSL water/GSL EPS
+gwvge <- data.frame(
+  type = c(rep("GSL Water", 19), rep("GSL EPS", 28)),
+  sample = c(gslwater, gsleps)
+)
+
+# GSL EPS/GSL mat
+gevgm <- data.frame(
+  type = c(rep("GSL EPS", 28), rep("GSL Mat", 27)),
+  sample = c(gsleps, gslmat)
+)
+
+```
+
+# Statistical Analysis
+
+### Shapiro-Wilkes Tests (Normality)
+
+```{r}
+
+# FGL Water                 p-value = 0.05254 (normal)
+shapiro.test(fglwater)
+
+# FGL EPS                   p-value = 0.1164 (normal)
+shapiro.test(fgleps)
+
+# FGL Mat                   p-value = 0.9007 (normal)
+shapiro.test(fglmat)
+
+# --------------------------------------------------------------------------------
+
+# GSL Water                 p-value = 0.7002 (normal)
+shapiro.test(gslwater)
+
+# GSL EPS                   p-value = 0.2201 (normal)
+shapiro.test(gsleps)
+
+# GSL Mat                   p-value = 0.4271 (normal)
+shapiro.test(gslmat)
+
+# --------------------------------------------------------------------------------
+
+# FGL All Samples           p-value = 0.001047 (not normal)
+with(location, shapiro.test(sample[loc == "FGL"]))
+
+# GSL All Samples           p-value = 0.001769 (not normal)
+with(location, shapiro.test(sample[loc == "GSL"]))
+
+# --------------------------------------------------------------------------------
+
+# All Water                 p-value = 0.05871 (normal)
+with(wve, shapiro.test(sample[type == "water"]))
+
+# All EPS                   p-value = 0.03853 (not normal)
+with(wve, shapiro.test(sample[type == "EPS"]))
+
+# All Mat                   p-value = 0.2974 (normal)
+with(wvm, shapiro.test(sample[type == "mat"]))
+
+```
+
+### F Tests (Equal Variance)
+
+Only populations where both were normal were tested for equal variance.
+
+```{r}
+
+# FGL Water vs GSL Water        p-value = 0.1585 (equal)
+var.test(type ~ group, data = water)
+
+# FGL EPS vs GSL EPS            p-value = 0.8934 (equal)
+var.test(type ~ group, data = eps)
+
+# FGL Mat vs GSL Mat            p-value = 0.2131 (equal)
+var.test(type ~ group, data = mat)
+
+# --------------------------------------------------------------------------------
+
+# All Water vs All Mat          p-value < 2.2e-16 (not equal)
+var.test(sample ~ type, data = wvm)
+
+# --------------------------------------------------------------------------------
+
+# FGL Water vs FGL Mat          p-value = 2.87e-08 (not equal)
+var.test(sample ~ type, data = fwvfm)
+
+# FGL water vs FGL EPS          p-value = 1.332e-15 (not equal)
+var.test(sample ~ type, data = fwvfe)
+
+# FGL EPS vs FGL mat            p-value = 1.087e-05 (not equal)
+var.test(sample ~ type, data = fevfm)
+
+# --------------------------------------------------------------------------------
+
+# GSL water vs GSL mat          p-value = 8.928e-13 (not equal)
+var.test(sample ~ type, data = gwvgm)
+
+# GSL water vs GSL EPS          p-value = < 2.2e-16 (not equal)
+var.test(sample ~ type, data = gwvge)
+
+# GSL EPS vs GSL mat            p-value = 0.0005128 (not equal)
+var.test(sample ~ type, data = gevgm)
+
+```
+
+### Comparative Tests (Statistical Significance)
+
+```{r}
+
+# FGL Water vs GSL Water 
+# Student's T test                p-value = 0.0002664
+t.test(type ~ loc, data = water, var.equal = TRUE)
+
+# FGL EPS vs GSL EPS
+# Student's T test                p-value = 0.5941
+t.test(type ~ loc, data = eps, var.equal = TRUE)
+
+
+# FGL Mat vs GSL Mat
+# Student's T test                p-value = 0.2138
+t.test(type ~ loc, data = mat, var.equal = TRUE)
+
+# FGL vs GSL
+# Wilcoxon Rank Sum               p-value = 0.4809
+wilcox.test(sample ~ loc, data = location, exact = FALSE)
+
+# All Water vs All EPS
+# Wilcoxon Rank Sum               p-value < 2.2e-16
+wilcox.test(sample ~ type, data = wve, exact = FALSE)
+
+# All Water vs All Mat
+# Welch's T test                  p-value < 2.2e-16
+t.test(sample ~ type, data = wvm)
+
+# All EPS vs All Mat
+# Wilcoxon Rank Sum               p-value = 1.562e-07
+wilcox.test(sample ~ type, data = evm, exact = FALSE)
+
+# FGL Water vs FGL EPS
+# Welch's T test                  p-value = 1.054e-15
+t.test(sample ~ type, data = fwvfe)
+
+# FGL Water vs FGL Mat
+# Welch's T test                  p-value < 2.2e-16
+t.test(sample ~ type, data = fwvfm)
+
+# FGL EPS vs FGL Mat
+# Welch's T test                  p-value = 5.093e-06
+t.test(sample ~ type, data = fevfm)
+
+# GSL Water vs GSL EPS
+# Welch's T test                  p-value = 1.018e-13
+t.test(sample ~ type, data = gwvge)
+
+# GSL Water vs GSL Mat
+# Welch's T test                  p-value = 5.754e-16
+t.test(sample ~ type, data = gwvgm)
+
+# GSL EPS vs GSL Mat
+# Welch's T test                  p-value = 4.502e-05
+t.test(sample ~ type, data = gevgm)
+
+```

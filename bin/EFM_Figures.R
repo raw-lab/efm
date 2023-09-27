@@ -1,0 +1,97 @@
+library(ggplot2)
+library(dplyr)
+library(reshape)
+library(tidyverse)
+library(wesanderson)
+names(wes_palettes)
+library(RColorBrewer)
+library(imager)
+library(cowplot)
+
+#### WATER ####
+
+# Means and CVs of Waters
+fglw <- 995057.8963
+fglw_cv <- 0.3879462248
+
+gslw <- 1434441.777
+gslw_cv <- 0.1915141408
+
+# Dataframe of Waters
+waterdf <- data.frame(concentration = c(fglw, gslw), Location = c("Green Lake", "Salt Lake"), cv=c(fglw_cv, gslw_cv))
+
+# Bar plot of Waters
+pn <- ggplot(waterdf, aes(x= Location, y= concentration, fill = Location, width= 0.8))+ggtitle("Water")
+pn <- pn + geom_bar(stat="identity") + scale_fill_brewer(palette = "Dark2")
+pn <- pn + geom_errorbar(aes(x= "Green Lake", ymin=fglw-(fglw*fglw_cv), ymax= fglw+(fglw*fglw_cv)), width=0.1, colour="grey20", alpha=0.9, size=0.5)
+pn <- pn + geom_errorbar(aes(x= "Salt Lake", ymin=gslw-(gslw*gslw_cv), ymax=gslw+(gslw*gslw_cv)), width=0.1, colour= "grey20", alpha=0.9, size=0.5)
+pn <- pn + labs(x= "Location", y= "Concentration (VLP/mL)")
+pn <- pn + theme_classic()
+pn <- pn + theme(text = element_text(size=18), plot.title = element_text(hjust = 0.5))+scale_y_continuous(labels = function(x) format(x, scientific = TRUE))
+pn
+
+
+#### EPS ####
+
+# Means and CVs of EPS
+fgle <- 12452341.84
+fgleps_cv <- 0.3526190621
+
+gsle <- 13068009.14
+gsleps_cv <- 0.3440039759
+
+# Dataframe of EPS
+epsdf <- data.frame(concentration = c(fgle, gsle), Location = c("Green Lake", "Salt Lake"), cv= c(fglweps_cv, gsleps_cv))
+
+# Bar plot of EPS
+ep <- ggplot(epsdf, aes(x=Location, y=concentration, fill = Location, width = 0.8))+ggtitle("EPS")
+ep <- ep + geom_bar(stat="identity") + scale_fill_brewer(palette = "Dark2")
+ep <- ep + labs(x= "Location", y= "Concentration (VLP/g)")
+ep <- ep + geom_errorbar(aes(x= "Green Lake", ymin= fgle-(fgle*fgleps_cv), ymax= fgle+(fgle*fgleps_cv)), width=0.1, colour="grey20", alpha=0.9, size=0.5)
+ep <- ep + geom_errorbar(aes(x= "Salt Lake", ymin=gsle-(gsle*gsleps_cv), ymax=gsle+(gsle*gsleps_cv)), width=0.1, colour="grey20", alpha=0.9, size=0.5)
+ep <- ep + theme_classic()
+ep <- ep + theme(text = element_text(size=18), plot.title = element_text(hjust = 0.5))+scale_y_continuous(labels = function(x) format(x, scientific = TRUE))
+ep
+
+
+#### MAT ####
+
+# Means and CVs of Mats
+fglm <- 8021540.087
+fglm_cv <- 0.2132320356
+
+gslm <- 8715091.921
+gslm_cv <- 0.2532708777
+
+# Dataframe of Mats
+matdf <- data.frame(concentration = c(fglm, gslm), Location = c("Green Lake", "Salt Lake"), cv= c(fglm_cv, gslm_cv))
+
+# Bar plot
+mp <- ggplot(matdf, aes(x=Location, y=concentration, fill = Location, width = 0.8, main="Mat"))+ggtitle("Mat")
+mp <- mp + geom_bar(stat="identity") + scale_fill_brewer(palette = "Dark2")
+mp <- mp + labs(x= "Location", y= "Concentration (VLP/g)")
+mp <- mp + geom_errorbar(aes(x= "Green Lake", ymin=fglm-(fglm*fglm_cv), ymax=fglm+(fglm*fglm_cv)), width=0.1, colour="grey20", alpha=0.9, size=0.5)
+mp <- mp + geom_errorbar(aes(x= "Salt Lake", ymin=gslm-(gslm*gslm_cv), ymax=gslm+(gslm*gslm_cv)), width=0.1, colour= "grey20", alpha=0.9, size=0.5)
+mp <- mp + theme_classic()
+mp <- mp + theme(text = element_text(size=18), plot.title = element_text(hjust = 0.5))+scale_y_continuous(labels = function(x) format(x, scientific = TRUE))
+mp
+
+
+#### BEADS ####
+
+# Means and CVs of Beads
+bead <- 2079983.25
+bead_cv <- 0.10
+
+# Dataframe of Beads
+beaddf <- data.frame(concentration = bead, Location = "Beads", cv = bead_cv)
+
+# Bar plot
+bp <- ggplot(beaddf, aes(x=Location, y=concentration, fill = Location, width = 0.8))+ggtitle("Beads")
+bp <- bp + geom_bar(stat="identity") + scale_fill_brewer(palette = "Dark2")
+bp <- bp + labs(x= "Beads", y= "Concentration (beads/mL)")
+bp <- bp + geom_errorbar(aes(ymin=bead-(bead*bead_cv), ymax=bead+(bead*bead_cv)), width=0.1, colour= "grey20", alpha=0.9, size=0.5)
+bp <- bp + theme_classic()
+bp <- bp + theme(text = element_text(size=18), plot.title = element_text(hjust = 0.5), legend.position="none", axis.ticks=element_blank(), axis.text.x=element_blank())+scale_y_continuous(labels = function(x) format(x, scientific = TRUE))
+bp
+
