@@ -1,6 +1,6 @@
 ## Viral enumeration using cost-effective wet-mount epifluorescence microscopy for aquatic ecosystems and modern microbialites
 
-Manuscript is currently peer-reviewed published.  <br />
+Manuscript is peer-reviewed published.  <br />
 BioRxiv is is published
 
 This is the code and analysis for this article.
