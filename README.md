@@ -13,7 +13,7 @@ Viral enumeration using cost-effective wet-mount epifluorescence microscopy for 
 Journal citation for peer-reviewed publication is: <br />
 Bellanger M, Visscher PT, White III RA. 2023 <br />
 Viral enumeration using cost-effective wet-mount epifluorescence microscopy for aquatic ecosystems and modern microbialites. Applied & Environmental Microbiology <br />
-2023;89(12):e0174423. <br />
+2023 89(12):e0174423. <br />
 [paper](https://journals.asm.org/doi/10.1128/aem.01744-23)
 
 ### Protocol
